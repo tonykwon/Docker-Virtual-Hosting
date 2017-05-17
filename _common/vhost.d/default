@@ -1,0 +1,6 @@
+#
+# common entries for all vhosts
+#
+client_max_body_size 384m;
+output_buffers 1 32k;
+postpone_output 1460;

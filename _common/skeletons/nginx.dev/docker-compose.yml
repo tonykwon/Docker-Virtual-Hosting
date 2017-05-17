@@ -1,0 +1,37 @@
+#
+# nginx.dev
+#
+version: '2'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: ./__Docker/app.dockerfile
+    volumes:
+      - .:/var/www/nginx.dev # vhost name
+      - ./__Docker/php.ini:/usr/local/etc/php/php.ini
+      - ./__Docker/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    restart: always
+  web:
+    build:
+      context: ./
+      dockerfile: ./__Docker/web.dockerfile
+    environment:
+      - PHP_FPM=app:9000
+      - VIRTUAL_HOST=nginx.dev # vhost name
+      - DOCUMENT_ROOT=/var/www/nginx.dev # vhost name
+    links:
+      - app
+    volumes_from:
+      - app
+    volumes:
+      # eventually modified then copied to /etc/nginx/conf.d/default.conf @see bootstrap.sh
+      - ./__Docker/vhost.conf:/tmp/default.conf
+    restart: always
+#
+# the glue!
+#
+networks:
+  default:
+    external:
+      name: service-tier

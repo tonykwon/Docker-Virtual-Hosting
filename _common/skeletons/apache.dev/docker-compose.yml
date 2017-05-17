@@ -1,0 +1,36 @@
+#
+# apache.dev
+#
+version: '2'
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: ./__Docker/app.dockerfile
+    volumes:
+      - .:/var/www/apache.dev # vhost
+      - ./__Docker/php.ini:/usr/local/etc/php/php.ini
+      - ./__Docker/www.conf:/usr/local/etc/php-fpm.d/www.conf
+    restart: always
+  web:
+    build:
+      context: ./
+      dockerfile: ./__Docker/web.dockerfile
+    environment:
+      - PHP_FPM=app:9000
+      - VIRTUAL_HOST=apache.dev # vhost name
+      - DOCUMENT_ROOT=/var/www/apache.dev # vhost name
+    links:
+      - app
+    volumes_from:
+      - app
+    volumes:
+      - ./__Docker/vhost.conf:/usr/local/apache2/conf/extra/httpd-vhosts.conf
+    restart: always
+#
+# the glue!
+#
+networks:
+  default:
+    external:
+      name: service-tier

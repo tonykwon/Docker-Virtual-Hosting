@@ -1,0 +1,18 @@
+# block everything under _common by default
+_common/*.*
+_common/certs/*
+!_common/certs/README.md
+!_common/vhost.d
+_common/database/*
+!_common/database/README.md
+!_common/docker-compose.yml
+
+*.dev/*
+
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

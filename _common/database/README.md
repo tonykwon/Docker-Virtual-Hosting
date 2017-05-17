@@ -1,0 +1,1 @@
+### This directory is mapped to **/var/lib/mysql** when MariaDB Runs for database persistency. ###

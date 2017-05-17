@@ -1,0 +1,27 @@
+#
+# php.dev
+#
+version: '2'
+services:
+  app:
+    command: php -S 0.0.0.0:80 -t /webroot
+    ports:
+      # normally we'd specify the mapping like {HOST_PORT:CONTAINER_PORT} but
+      # if we only supply CONTAINER_PORT, Docker Host will auto map to its available port
+      - "80"
+    build:
+      context: ./
+      dockerfile: ./__Docker/app.dockerfile
+    volumes:
+      - .:/webroot
+      - ./__Docker/php.ini:/usr/local/etc/php/php.ini
+    restart: always
+    environment:
+      - VIRTUAL_HOST=php.dev
+#
+# the glue!
+#
+networks:
+  default:
+    external:
+      name: service-tier

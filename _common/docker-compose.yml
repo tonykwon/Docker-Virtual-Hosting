@@ -1,0 +1,40 @@
+#
+# nginx-proxy: Automated nginx proxy for Docker containers using docker-gen
+#
+version: '2'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./vhost.d:/etc/nginx/vhost.d
+      - ./certs:/etc/nginx/certs
+    restart: always
+#
+# database container that is 'shared' for our use
+# use db as a database hostname when you need to connect to it
+#
+  db:
+    image: mariadb
+    container_name: db
+    volumes:
+      - ./database:/var/lib/mysql # for data persistency
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_CHARSET=utf8
+      - MYSQL_COLLATE=
+    ports:
+      - "3306:3306"
+    restart: always
+#
+# the glue!
+# initially run: $ docker network create service-tier;
+#
+networks:
+  default:
+    external:
+      name: service-tier
