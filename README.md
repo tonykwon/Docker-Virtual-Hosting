@@ -8,6 +8,8 @@ This repository contains configuration files to run [nginx](https://hub.docker.c
 
 I work on many PHP based applications & websites and I needed a way to be able to customize each "container" instead of having to rely on a single server instance that is shared. The setup described here allows me to run virtual hosting that I can individually customize & tweak. The two examples provided under `skeletons` directory should get you started with a fairly common webserver setup and give you the flexibility to tweak to suit your needs. MySQL Server is always needed and hence it is started when the `nginx-proxy` container runs. Database directory is mounted from the Host side so that the **data persists** even after the container shuts down. (see `_common/database`) It is still strongly recommneded to make backups of the directory as well as perform database dumps.
 
+I am using this setup for developing things locally. I do not recommend using this for production at all.
+
 ### Prerequisits ###
 
 Note: This guide is based on OS X as the Docker Host.
