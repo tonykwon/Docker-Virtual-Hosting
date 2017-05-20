@@ -139,7 +139,7 @@ Sites/
 ```
 
 ```
-Sites/skeletons
+Sites/_common/skeletons
     apache.dev                  -> apache example
         __Docker
             app.dockerfile      -> Dockerfile that builds php-fpm
