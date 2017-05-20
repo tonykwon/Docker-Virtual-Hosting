@@ -64,7 +64,7 @@ $ docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
-### Giving it a try - build & run container for apache.dev ###
+### Giving it a try - build & run containers for apache.dev ###
 
 Now, we need the main containers up and running again.
 
@@ -93,7 +93,7 @@ jwilder/nginx-proxy    latest              ca6685ed24ba        8 days ago       
 mariadb                latest              f04960029149        8 days ago          395MB
 ```
 
-### Giving it a try - build & run container for nginx.dev ###
+### Giving it a try - build & run containers for nginx.dev ###
 
 ```
 $ cd /Users/tonykwon/_common/skeletons/nginx.dev/
