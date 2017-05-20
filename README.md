@@ -37,7 +37,7 @@ jwilder/nginx-proxy   latest              ca6685ed24ba        8 days ago        
 mariadb               latest              f04960029149        8 days ago          395MB
 ```
 
-Since we are running it on the foreground, use a different terminal to see what containers are created & running.
+Also, check to see what containers are created & running.
 ```
 $ docker ps -a
 CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                      NAMES
@@ -45,7 +45,8 @@ CONTAINER ID        IMAGE                 COMMAND                  CREATED      
 360df1662580        mariadb               "docker-entrypoint..."   2 seconds ago       Up 1 second         0.0.0.0:3306->3306/tcp                     db
 ```
 
-To stop, press ctrl+c then
+To stop, press ctrl+c then `$ docker-compose  down`
+
 ```
 Gracefully stopping... (press Ctrl+C again to force)
 Stopping nginx-proxy ... done
@@ -99,7 +100,7 @@ $ cd /Users/tonykwon/_common/skeletons/nginx.dev/
 $ docker-compose up
 ```
 
-Try visiting `http://nginx.dev/` on a browser to ensure the containers are up and running. Similarly, check to see what images are pulled/created by running `$docker images` command.
+Try visiting `http://nginx.dev/` on a browser to ensure the containers are up and running. Similarly, check to see what images are pulled/created by running `$ docker images` command.
 
 ### Typical Workflow ###
 
