@@ -131,41 +131,42 @@ NOTE
 ```
 Sites/
     _common
-        database            -> mapped to /var/lib/mysql of database container
-        certs               -> ssl certificates
-        skeletons           -> 2 example configurations
-        vhost.d             -> mapped to /etc/nginx/vhost.d of the nginx proxy which listens on 80, 443
+        database                -> mapped to /var/lib/mysql of database container
+        certs                   -> ssl certificates
+        skeletons               -> 2 example configurations
+        vhost.d                 -> mapped to /etc/nginx/vhost.d of the nginx proxy which listens on 80, 443
         docker-compose.yml
 ```
 
 ```
 Sites/skeletons
-    apache.dev              -> apache example
+    apache.dev                  -> apache example
         __Docker
-            app.dockerfile  -> Dockerfile that builds php-fpm
-            web.dockerfile  -> Dockerfile that builds apache
-            vhost.conf      -> VirtualHost configuration for apache
-            php.ini         -> Custom php.ini configuration
-            www.conf        -> Custom php-fpm configuration
+            app.dockerfile      -> Dockerfile that builds php-fpm
+            web.dockerfile      -> Dockerfile that builds apache
+            vhost.conf          -> VirtualHost configuration for apache
+            php.ini             -> Custom php.ini configuration
+            www.conf            -> Custom php-fpm configuration
         docker-compose.yml
         index.html
         index.php
 
-     nginx.dev              -> nginx example
+     nginx.dev                  -> nginx example
         __Docker
-            app.dockerfile  -> Dockerfile that builds php-fpm
-            web.dockerfile  -> Dockerfile that builds nginx
-            vhost.conf      -> Virtualhost configuration for nginx
-            php.ini         -> Custom php.ini configuration
-            www.conf        -> Custom php-fpm configuration
+            app.dockerfile      -> Dockerfile that builds php-fpm
+            web.dockerfile      -> Dockerfile that builds nginx
+            vhost.conf          -> Virtualhost configuration for nginx
+            php.ini             -> Custom php.ini configuration
+            www.conf            -> Custom php-fpm configuration
         docker-compose.yml
         index.html
         index.php
 
-    php.dev                 -> stand-alone PHP example
+    php.dev                     -> stand-alone PHP example
         __Docker
-            app.dockerfile  -> Dockerfile that builds php
-            php.ini         -> Custom php.ini configuration
+            app.dockerfile      -> Dockerfile that builds php
+            app-zts.dockerfile  -> Dockerfile that build php w/ ZTS support
+            php.ini             -> Custom php.ini configuration
         docker-compose.yml
         index.php
 ```
@@ -177,8 +178,8 @@ Say you want some SSL support for VIRTUAL_HOST `ssl.dev` per se using self-signe
 1. Move to the common certs directory. `$ cd /Users/tonykwon/Sites/_common/certs`
 2. Generate self-signed key and certificate pair in one go for `ssl.dev`. `$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ssl.dev.key -out ssl.dev.crt` Note: `-keyout` and `-out` names: `{VIRTUAL_HOST}.key` and `{VIRTUAL_HOST}.crt`
 3. When generating certificates, ensure you use the *Common Name* as `ssl.dev`. It is possible to generate a default certificate that serves all top-level domains, but as far as I know there are some browsers that DO NOT support `wildcard domains` at the top-level. In order to use the wildcard domains, I believe you need to use a base domain name such as `myapps.dev` and virtual host names like `apache.myapps.dev`, `nginx.myapps.dev`, `ssl.myapps.dev` and so on. So in this case, default certificate can have the Common Name `*.myapps.dev` and the file names can be `default.key` and `default.crt`.
-4. Restart the nginx-proxy container. `$ cd /Users/tonykwon/Sites/_common && docker-compose up`
-5. Restart the virtual host container. `$ cd /Users/tonykwon/Sites/ssl.dev && docker-compose up`
+4. Restart the nginx-proxy container.
+5. Restart the virtual host container.
 
 NOTE: Because we are treating the backend non-ssl, there is nothing to modify on the virtual host container side. If the SSL Backend must support SSL, supply `VIRTUAL_PROTO=https`, `VIRTUAL_PORT=443` and `HTTPS_METHOD=nohttp` to the environment but this requires you to modify vhost.conf which I will not cover here.
 
