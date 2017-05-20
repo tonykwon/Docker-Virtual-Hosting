@@ -19,17 +19,17 @@ Note: This guide is based on OS X as the Docker Host.
 2. Modify Host Database by adding some entries to hosts file. `e.g. /etc/hosts`
 `127.0.0.1 apache.dev` and `127.0.0.1 nginx.dev`
 3. Run this command once: `$ docker network create service-tier;`
-4. Clone this repo into a centralized location to host all our containerized virtual host apps: `e.g. /Users/tonykwon/Sites`
+4. Clone this repo ***into a centralized location*** to host all our containerized virtual host apps: `e.g. /Users/tonykwon/Sites`
 
 ### Giving it a try - just to see what this repository is all about ###
 
-We will first build based on our main compose file. Since we are pulling from official images, no images will be built locally.
+We will first run containers base off of our main compose file so that we have working nginx-proxy and MariaDB. Since we are pulling from official images, no images will be built locally.
 ```
 $ cd /Users/tonykwon/Sites/_common
-$ docker-compose build
+$ docker-compose up
 ```
 
-Once the build (pulling of images really) is complete, check the images:
+Once the build (pulling of images really) is complete, check the images on a different terminal:
 ```
 $ docker images
 REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE
@@ -37,15 +37,13 @@ jwilder/nginx-proxy   latest              ca6685ed24ba        8 days ago        
 mariadb               latest              f04960029149        8 days ago          395MB
 ```
 
-Try firing up the services: `$ docker-compose up`. Since we are running it on foreground, use a different terminal to see what containers are created & running.
+Since we are running it on the foreground, use a different terminal to see what containers are created & running.
 ```
 $ docker ps -a
 CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                      NAMES
 9197af281717        jwilder/nginx-proxy   "/app/docker-entry..."   2 seconds ago       Up 1 second         0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   nginx-proxy
 360df1662580        mariadb               "docker-entrypoint..."   2 seconds ago       Up 1 second         0.0.0.0:3306->3306/tcp                     db
 ```
-
-Since the images are pulled, simply running `$ docker-compose up` should be enough from now on.
 
 To stop, press ctrl+c then
 ```
@@ -67,13 +65,22 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 ### Giving it a try - build & run container for apache.dev ###
 
-Now, we need the main services up and running again. Then on a different terminal, run:
+Now, we need the main containers up and running again.
+
+```
+$ cd /Users/tonykwon/_common
+$ docker-compose up (to run on the foreground)
+or
+$ docker-compose up -d (to run on the background)
+```
+
+Then on a different terminal, run:
 ```
 $ cd /Users/tonykwon/_common/skeletons/apache.dev/
 $ docker-compose up (initial build could take a long time)
 ```
 
-Try visiting `http://apache.dev/` on a browser to ensure the server is up and running. Also check to see what images are pulled/created:
+Try visiting `http://apache.dev/` on a browser to ensure the containers are up and running. Also check to see what images are pulled/created:
 ```
 $ docker images
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
@@ -92,14 +99,16 @@ $ cd /Users/tonykwon/_common/skeletons/nginx.dev/
 $ docker-compose up
 ```
 
-Try visiting `http://nginx.dev/` on a browser to ensure the container is up and running. Similarly, check to see what images are pulled/created by running `$docker images` command.
+Try visiting `http://nginx.dev/` on a browser to ensure the containers are up and running. Similarly, check to see what images are pulled/created by running `$docker images` command.
 
 ### Typical Workflow ###
 
 We need the nginx-proxy & database containers running while we are working so on the main terminal we run:
 ```
 $ cd /Users/tonykwon/Sites/_common
-$ docker-compose up
+$ docker-compose up    (to run on the foreground)
+or
+$ docker-compose up -d (to run on the background)
 ```
 
 e.g. Your new site you want to work on is `test.dev`
