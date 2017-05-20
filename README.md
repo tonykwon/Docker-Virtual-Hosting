@@ -165,7 +165,7 @@ Sites/skeletons
     php.dev                     -> stand-alone PHP example
         __Docker
             app.dockerfile      -> Dockerfile that builds php
-            app-zts.dockerfile  -> Dockerfile that build php w/ ZTS support
+            app-zts.dockerfile  -> Dockerfile that builds php w/ ZTS support
             php.ini             -> Custom php.ini configuration
         docker-compose.yml
         index.php
