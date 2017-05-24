@@ -14,11 +14,13 @@ services:
       dockerfile: ./__Docker/app.dockerfile
       # dockerfile: ./__Docker/app-zts.dockerfile # PHP ZTS support
     volumes:
-      - .:/webroot
+      - ./webroot:/webroot
       - ./__Docker/php.ini:/usr/local/etc/php/php.ini
     restart: always
     environment:
-      - VIRTUAL_HOST=php.dev
+      VIRTUAL_HOST: php.dev # vhost name
+      CERT_NAME:    php.dev # uncomment for SSL
+      HTTPS_METHOD: nohttps # uncomment for SSL
 #
 # the glue!
 #
