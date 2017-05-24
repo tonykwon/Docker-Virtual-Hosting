@@ -8,7 +8,7 @@ services:
       context: ./
       dockerfile: ./__Docker/app.dockerfile
     volumes:
-      - .:/var/www/nginx.dev # vhost name
+      - ./webroot:/var/www/nginx.dev # vhost name
       - ./__Docker/php.ini:/usr/local/etc/php/php.ini
       - ./__Docker/www.conf:/usr/local/etc/php-fpm.d/www.conf
     restart: always
@@ -17,9 +17,12 @@ services:
       context: ./
       dockerfile: ./__Docker/web.dockerfile
     environment:
-      - PHP_FPM=app:9000
-      - VIRTUAL_HOST=nginx.dev # vhost name
-      - DOCUMENT_ROOT=/var/www/nginx.dev # vhost name
+      PHP_FPM:       app:9000
+      VIRTUAL_HOST:  nginx.dev # vhost name
+      DOCUMENT_ROOT: /var/www/nginx.dev # vhost name
+      VIRTUAL_HOST: nginx.dev # vhost name
+      CERT_NAME:    nginx.dev # comment out to support SSL
+      HTTPS_METHOD: nohttps   # comment out to support SSL
     links:
       - app
     volumes_from:
