@@ -8,7 +8,7 @@ services:
       context: ./
       dockerfile: ./__Docker/app.dockerfile
     volumes:
-      - .:/var/www/apache.dev # vhost
+      - ./webroot:/var/www/apache.dev # vhost name
       - ./__Docker/php.ini:/usr/local/etc/php/php.ini
       - ./__Docker/www.conf:/usr/local/etc/php-fpm.d/www.conf
     restart: always
@@ -17,9 +17,11 @@ services:
       context: ./
       dockerfile: ./__Docker/web.dockerfile
     environment:
-      - PHP_FPM=app:9000
-      - VIRTUAL_HOST=apache.dev # vhost name
-      - DOCUMENT_ROOT=/var/www/apache.dev # vhost name
+      PHP_FPM:       app:9000
+      VIRTUAL_HOST:  apache.dev # vhost name
+      CERT_NAME:     apache.dev # comment out to support SSL
+      HTTPS_METHOD:  nohttps    # comment out to support SSL
+      DOCUMENT_ROOT: /var/www/apache.dev # vhost name
     links:
       - app
     volumes_from:
