@@ -148,8 +148,9 @@ Sites/_common/skeletons
             php.ini             -> Custom php.ini configuration
             www.conf            -> Custom php-fpm configuration
         docker-compose.yml
-        index.html
-        index.php
+        webroot                 -> webroot
+            index.html
+            index.php
 
      nginx.dev                  -> nginx example
         __Docker
@@ -159,8 +160,9 @@ Sites/_common/skeletons
             php.ini             -> Custom php.ini configuration
             www.conf            -> Custom php-fpm configuration
         docker-compose.yml
-        index.html
-        index.php
+        webroot                 -> webroot
+            index.html
+            index.php
 
     php.dev                     -> stand-alone PHP example
         __Docker
@@ -168,12 +170,19 @@ Sites/_common/skeletons
             app-zts.dockerfile  -> Dockerfile that builds php w/ ZTS support
             php.ini             -> Custom php.ini configuration
         docker-compose.yml
-        index.php
+        webroot                 -> webroot
+            index.php
 ```
 
 ### SSL Support ###
 
 Say you want some SSL support for VIRTUAL_HOST `ssl.dev` per se using self-signed ssl certificate. The default setup redirects all non-ssl traffic to ssl then assumes the SSL backend is non-ssl (which works perfect in our setup as we do not need to touch the existing vhost.conf)
+
+NOTE: In order to get around some side effects with nginx-proxy SSL support, two environment variables are set on all skeleton containers: `CERT_NAME` and `HTTPS_METHOD`. By adding following variables, we ensure that HTTPS is disabled by default. To enable, first comment out the two environment variables then follow the instructions below.
+```
+    CERT_NAME:     {VIRTUAL_HOST}.dev # comment out to support SSL
+    HTTPS_METHOD:  nohttps            # comment out to support SSL
+```
 
 1. Move to the common certs directory. `$ cd /Users/tonykwon/Sites/_common/certs`
 2. Generate self-signed key and certificate pair in one go for `ssl.dev`. `$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ssl.dev.key -out ssl.dev.crt` Note: `-keyout` and `-out` names: `{VIRTUAL_HOST}.key` and `{VIRTUAL_HOST}.crt`
