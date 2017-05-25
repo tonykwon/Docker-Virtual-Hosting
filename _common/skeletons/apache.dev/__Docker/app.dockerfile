@@ -10,5 +10,3 @@ RUN apk upgrade --update \
     && pecl install xdebug  && docker-php-ext-enable xdebug \
     && apk del autoconf file g++ libtool gcc binutils isl libatomic libc-dev musl-dev make re2c libstdc++ libgcc binutils-libs mpc1 mpfr3 gmp libgomp \
     && rm -rf /var/cache/apk/* /tmp/* /usr/share/man
-
-# use "volumes" feature of docker-compose.yml instead of COPY
