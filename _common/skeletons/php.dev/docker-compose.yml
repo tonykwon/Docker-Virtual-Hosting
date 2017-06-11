@@ -21,6 +21,8 @@ services:
       VIRTUAL_HOST: php.dev # vhost name
       CERT_NAME:    php.dev # uncomment for SSL
       HTTPS_METHOD: nohttps # uncomment for SSL
+    mem_limit: 512m
+
 #
 # the glue!
 #
