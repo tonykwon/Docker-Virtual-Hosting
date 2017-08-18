@@ -16,8 +16,7 @@ Note: This guide is based on OS X as the Docker Host.
 
 0. Ensure no other programs are listening on port 80, 443, 3306 on the host machine.
 1. Install & run [Docker Community Edition](https://store.docker.com/search?type=edition&offering=community).
-2. Modify Host Database by adding some entries to hosts file. `e.g. /etc/hosts`
-`127.0.0.1 apache.dev` and `127.0.0.1 nginx.dev`
+2. Modify Host Database by adding some entries to hosts file. `e.g. /etc/hosts` `127.0.0.1 db`, `127.0.0.1 apache.dev` and `127.0.0.1 nginx.dev`
 3. Run this command once: `$ docker network create service-tier;`
 4. Clone this repo ***into a centralized location*** to host all our containerized virtual host apps: `e.g. /Users/tonykwon/Sites`
 
