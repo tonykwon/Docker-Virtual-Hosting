@@ -14,7 +14,7 @@ services:
       dockerfile: ./__Docker/app.dockerfile
       # dockerfile: ./__Docker/app-zts.dockerfile # PHP ZTS support
     volumes:
-      - ./webroot:/webroot
+      - ./webroot:/webroot:cached
       - ./__Docker/php.ini:/usr/local/etc/php/php.ini
     restart: always
     environment:
